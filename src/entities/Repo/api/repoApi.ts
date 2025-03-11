@@ -5,7 +5,7 @@ export const repoApi = createApi({
     reducerPath: "repoApi",
     baseQuery: fetchBaseQuery({ baseUrl: "https://api.github.com" }),
     endpoints: (builder) => ({
-        getIssues: builder.query<Repo, string>({
+        getRepo: builder.query<Repo, string>({
             query: (repoFullName) => `/repos/${repoFullName}`,
         }),
     })
