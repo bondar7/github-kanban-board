@@ -1,9 +1,9 @@
 import {createSlice} from "@reduxjs/toolkit";
-import {IssuesInitialState} from "./initialState.ts";
+import {IssuesInitialState as initialState} from "./initialState.ts";
 
 const IssueSlice = createSlice({
     name: "issue",
-    initialState: IssuesInitialState,
+    initialState,
     reducers: {},
 });
 
