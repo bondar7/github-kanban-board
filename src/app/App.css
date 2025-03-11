@@ -1,3 +1,57 @@
 body {
-    font-family: 'Funnel Display', sans-serif;
+    font-family: 'Funnel Display', sans-serif;  font-size: 16px; /* Set a base font size */
+    line-height: 1.5; /* Adjust line height for readability */
+    background-color: #f8f9fa; /* Light background color */
+}
+/* Basic reset to remove margins and paddings */
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; /* Ensures padding and border are included in element's total width/height */
+}
+
+/* Remove list styles */
+ul, ol {
+    list-style: none;
+}
+
+/* Remove text decoration from links */
+a {
+    text-decoration: none;
+    color: inherit; /* Inherit color from parent */
+}
+
+/* Remove border from images */
+img {
+    border: 0;
+    max-width: 100%;
+    height: auto; /* Ensures images are responsive */
+}
+
+/* Remove default input styles */
+input, textarea, button {
+    border: none;
+    outline: none;
+    font-family: inherit;
+    font-size: inherit;
+    background: transparent;
+}
+
+/* Remove default form input field styles in some browsers */
+input:focus, textarea:focus, button:focus {
+    outline: none;
+}
+
+/* Set default font for headings */
+h1, h2, h3, h4, h5, h6 {
+    font-family: inherit;
+    font-weight: bold;
+    margin-bottom: 0.5em; /* Add margin for spacing */
+}
+
+p {
+    margin: 0;
+    padding: 0;
 }
