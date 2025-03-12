@@ -1,0 +1,25 @@
+.container {
+    width: 100%;
+    min-height: 50vh;
+}
+
+.card {
+    height: 70vh;
+    min-height: 300px;
+}
+
+.cardBodyScrollable {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem;
+    background-color: var(--bs-secondary);
+    border-radius: 0.25rem;
+    overflow-y: auto;
+    max-height: 100%;
+}
+
+.emptyMessage {
+    text-align: center;
+    color: white;
+}

@@ -12,13 +12,13 @@ const KanbanBoard = () => {
         <Container>
             <Row>
                 <Col md={4}>
-                    <KanbanList title={IssueState.TODO} items={toDoIssues}/>
+                    <KanbanList title={"ToDo"} items={toDoIssues} type={IssueState.TODO}/>
                 </Col>
                 <Col md={4}>
-                    <KanbanList title={IssueState.IN_PROGRESS} items={inProgressIssues}/>
+                    <KanbanList title={"In Progress"} items={inProgressIssues} type={IssueState.IN_PROGRESS}/>
                 </Col>
                 <Col md={4}>
-                    <KanbanList title={IssueState.DONE} items={doneIssues}/>
+                    <KanbanList title={"Done"} items={doneIssues} type={IssueState.DONE}/>
                 </Col>
             </Row>
         </Container>
