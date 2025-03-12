@@ -8,5 +8,10 @@ export const selectInProgressIssues = (state: RootState): Issue[] =>
     state.issueReducer.issues.filter(issue => issue.state === IssueState.IN_PROGRESS);
 export const selectDoneIssues = (state: RootState): Issue[] =>
     state.issueReducer.issues.filter(issue => issue.state === IssueState.DONE);
-export const selectLoadingState = (state: RootState): boolean => state.issueReducer.isLoading;
-export const selectErrorState = (state: RootState): boolean => state.issueReducer.isError;
+export const selectOpenIssuesLoading = (state: RootState) => state.issueReducer.isLoading_OpenIssues;
+export const selectInProgressIssuesLoading = (state: RootState) => state.issueReducer.isLoading_InProgressIssues;
+export const selectClosedIssuesLoading = (state: RootState) => state.issueReducer.isLoading_ClosedIssues;
+
+export const selectOpenIssuesError = (state: RootState) => state.issueReducer.isError_OpenIssues;
+export const selectInProgressIssuesError = (state: RootState) => state.issueReducer.isError_InProgressIssues;
+export const selectClosedIssuesError = (state: RootState) => state.issueReducer.isError_ClosedIssues;
