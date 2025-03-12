@@ -7,3 +7,10 @@
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     transition: all 0.2s ease-in-out;
 }
+
+.cardTitle {
+    white-space: nowrap; /* Prevent text from wrapping */
+    overflow: hidden; /* Hide overflow text */
+    text-overflow: ellipsis; /* Add "..." at the end if text overflows */
+    max-width: 100%; /* Adjust this width as needed */
+}
