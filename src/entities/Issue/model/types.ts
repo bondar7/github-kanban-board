@@ -1,21 +1,30 @@
 export enum IssueState {
-    TODO = "ToDo",
-    IN_PROGRESS = "In Progress",
-    DONE = "Done"
+    TODO = "open",
+    IN_PROGRESS = "in_progress",
+    DONE = "closed"
 }
 
 export interface Issue {
     id: number;
     title: string;
     number: number;
-    createdAt: string;
-    author: string;
-    commentsCount: number;
-    state: IssueState.DONE | IssueState.IN_PROGRESS | IssueState.TODO;
+    created_at: string;
+    user: {
+        login: string;
+    };
+    assignee: {
+        login: string;
+    } | null;
+    comments: number;
+    state: IssueState;
 }
 
 export type IssuesState = {
     issues: Issue[];
-    isLoading: boolean;
-    isError: boolean;
+    isLoading_OpenIssues: boolean;
+    isLoading_InProgressIssues: boolean;
+    isLoading_ClosedIssues: boolean;
+    isError_OpenIssues: boolean;
+    isError_InProgressIssues: boolean;
+    isError_ClosedIssues: boolean;
 }
