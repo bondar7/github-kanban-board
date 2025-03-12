@@ -11,7 +11,8 @@ const LoadRepoIssuesButton = ({repo_url}: ButtonProps) => {
 
     const repoFullName = extractRepoFullName(repo_url);
 
-    const handleOnClick = () => {
+    const handleOnClick = (e: React.MouseEvent) => {
+        e.preventDefault();
         if (repoFullName) {
             repoApi.useGetRepoQuery(repoFullName); // fetch repo data with repo full name
             issuesApi.useGetIssuesQuery(repoFullName) // fetch issues with repo full name
