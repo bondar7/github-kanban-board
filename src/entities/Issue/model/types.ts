@@ -16,4 +16,6 @@ export interface Issue {
 
 export type IssuesState = {
     issues: Issue[];
+    isLoading: boolean;
+    isError: boolean;
 }
