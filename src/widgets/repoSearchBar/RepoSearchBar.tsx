@@ -19,23 +19,23 @@ const RepoSearchBar = () => {
     }, []);
 
     // Fetch repo
-    const { isFetching: isRepoLoading } =
+    const { isFetching: isRepoLoading, refetch: refetchRepo } =
         repoApi.useGetRepoQuery(repoFullName, { skip: !repoFullName });
 
     // Fetch issues
-    const { isFetching: isOpenIssuesLoading } =
+    const { isFetching: isOpenIssuesLoading, refetch: refetchOpenIssues } =
         issuesApi.useGetOpenIssuesQuery(repoFullName, {
             skip: !repoFullName,
             refetchOnMountOrArgChange: true
         });
 
-    const { isFetching: isInProgressIssuesLoading } =
+    const { isFetching: isInProgressIssuesLoading, refetch: refetchInProgressIssues } =
         issuesApi.useGetInProgressIssuesQuery(repoFullName, {
             skip: !repoFullName,
             refetchOnMountOrArgChange: true
         });
 
-    const { isFetching: isClosedIssuesLoading} =
+    const { isFetching: isClosedIssuesLoading, refetch: refetchClosedIssues } =
         issuesApi.useGetClosedIssuesQuery(repoFullName, {
             skip: !repoFullName,
             refetchOnMountOrArgChange: true
@@ -45,11 +45,19 @@ const RepoSearchBar = () => {
         e.preventDefault();
         if (repoURL) {
             dispatch(setIssues([]));
-            setRepoFullName(extractRepoFullName(repoURL));
+            const newRepoFullName = extractRepoFullName(repoURL);
+            if (repoFullName === newRepoFullName) {
+                // Force refetching of repo and issues
+                refetchRepo();
+                refetchOpenIssues();
+                refetchInProgressIssues();
+                refetchClosedIssues();
+            } else {
+                setRepoFullName(newRepoFullName);
+            }
             setRepoURL("");
         }
-    }, [repoURL, dispatch]);
-
+    }, [dispatch, repoURL, repoFullName, refetchRepo, refetchOpenIssues, refetchInProgressIssues, refetchClosedIssues]);
 
     const isIssuesLoading = isRepoLoading || isOpenIssuesLoading || isInProgressIssuesLoading || isClosedIssuesLoading;
 
