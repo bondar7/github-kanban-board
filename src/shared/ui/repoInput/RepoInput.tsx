@@ -1,8 +1,9 @@
 import { Form } from "react-bootstrap";
+import {memo} from "react";
 
 interface InputProps {
     repoURL: string;
-    setRepoURL: React.Dispatch<React.SetStateAction<string>>;
+    setRepoURL: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 const RepoInput = ({repoURL, setRepoURL}: InputProps) => {
@@ -11,9 +12,10 @@ const RepoInput = ({repoURL, setRepoURL}: InputProps) => {
             type="text"
             placeholder="Enter repo URL"
             value={repoURL}
-            onChange={(e) => setRepoURL(e.target.value)}
+            onChange={setRepoURL}
+            className="w-100"
         />
     );
 };
 
-export default RepoInput;
+export default memo(RepoInput);

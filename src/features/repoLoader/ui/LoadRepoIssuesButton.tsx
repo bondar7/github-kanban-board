@@ -1,25 +1,22 @@
 import {Button} from "react-bootstrap";
-import {repoApi} from "../../../entities/Repo";
-import {issuesApi} from "../../../entities/Issue";
-import extractRepoFullName from "../../../shared/utils/extractRepoFullName.ts";
+import {memo} from "react";
 
 interface ButtonProps {
-    repo_url: string;
+    isLoading: boolean;
+    handleOnLoad: (e: React.MouseEvent) => void;
 }
 
-const LoadRepoIssuesButton = ({repo_url}: ButtonProps) => {
-
-    const repoFullName = extractRepoFullName(repo_url);
-
-    const handleOnClick = (e: React.MouseEvent) => {
-        e.preventDefault();
-        if (repoFullName) {
-            repoApi.useGetRepoQuery(repoFullName); // fetch repo data with repo full name
-            issuesApi.useGetIssuesQuery(repoFullName) // fetch issues with repo full name
-        } else return;
-    };
-
-    return <Button onClick={handleOnClick}>Load Issues</Button>
+const LoadRepoIssuesButton = ({ isLoading, handleOnLoad }: ButtonProps) => {
+    return (
+        <Button
+            disabled={isLoading}
+            className="px-3 text-nowrap"
+            style={{ height: "100%", minWidth: "120px" }}
+            onClick={handleOnLoad}
+        >
+            {isLoading ? "Loading..." : "Load Issues"}
+        </Button>
+    );
 };
 
-export default LoadRepoIssuesButton;
+export default memo(LoadRepoIssuesButton);
