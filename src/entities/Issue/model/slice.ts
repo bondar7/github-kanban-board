@@ -14,7 +14,8 @@ const IssueSlice = createSlice({
     extraReducers: (builder) => {
         builder.addMatcher(issuesApi.endpoints.getIssues.matchPending, (state) => {
             state.isLoading = true;
-            state.isLoading = false;
+            state.isError = false;
+            state.issues = [];
         });
         builder.addMatcher(issuesApi.endpoints.getIssues.matchFulfilled, (state, action) => {
             state.isLoading = false;
