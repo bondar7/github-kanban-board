@@ -1,12 +1,11 @@
 export interface RepoOwner {
     login: string;
-    id: number;
     url: string;
 }
 
 export interface Repo {
     name: string;
-    url: string;
+    html_url: string;
     owner: RepoOwner;
 }
 
