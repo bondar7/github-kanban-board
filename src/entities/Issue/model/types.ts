@@ -20,7 +20,9 @@ export interface Issue {
 }
 
 export type IssuesState = {
-    issues: Issue[];
+    openIssues: Issue[];
+    inProgressIssues: Issue[];
+    closedIssues: Issue[];
     isLoading_OpenIssues: boolean;
     isLoading_InProgressIssues: boolean;
     isLoading_ClosedIssues: boolean;

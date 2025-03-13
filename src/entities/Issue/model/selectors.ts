@@ -1,23 +1,10 @@
-import { createSelector } from 'reselect';
-import { RootState } from "../../../shared";
-import { Issue, IssueState } from "./types.ts";
+import {RootState} from "../../../shared";
 
-export const selectAllIssues = (state: RootState): Issue[] => state.issueReducer.issues;
+export const selectToDoIssues = (state: RootState) => state.issueReducer.openIssues;
 
-export const selectToDoIssues = createSelector(
-    (state: RootState) => state.issueReducer.issues,
-    (issues) => issues.filter(issue => issue.state === IssueState.TODO)
-);
+export const selectInProgressIssues = (state: RootState) => state.issueReducer.inProgressIssues;
 
-export const selectInProgressIssues = createSelector(
-    (state: RootState) => state.issueReducer.issues,
-    (issues) => issues.filter(issue => issue.state === IssueState.IN_PROGRESS)
-);
-
-export const selectDoneIssues = createSelector(
-    (state: RootState) => state.issueReducer.issues,
-    (issues) => issues.filter(issue => issue.state === IssueState.DONE)
-);
+export const selectDoneIssues = (state: RootState) => state.issueReducer.closedIssues;
 
 export const selectOpenIssuesLoading = (state: RootState) => state.issueReducer.isLoading_OpenIssues;
 export const selectInProgressIssuesLoading = (state: RootState) => state.issueReducer.isLoading_InProgressIssues;

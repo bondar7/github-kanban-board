@@ -4,7 +4,7 @@ import RepoInput from "../../shared/ui/repoInput/RepoInput.tsx";
 import LoadRepoIssuesButton from "../../features/repoLoader/ui/LoadRepoIssuesButton.tsx";
 import extractRepoFullName from "../../shared/utils/extractRepoFullName.ts";
 import {issuesApi} from "../../entities/Issue";
-import {setIssues} from "../../entities/Issue/model/slice.ts";
+import {resetIssues} from "../../entities/Issue/model/slice.ts";
 import useAppDispatch from "../../shared/hooks/useAppDispatch.ts";
 import {repoApi} from "../../entities/Repo";
 
@@ -44,7 +44,7 @@ const RepoSearchBar = () => {
     const handleOnLoad = useCallback((e: React.MouseEvent) => {
         e.preventDefault();
         if (repoURL) {
-            dispatch(setIssues([]));
+            dispatch(resetIssues());
             const newRepoFullName = extractRepoFullName(repoURL);
             if (repoFullName === newRepoFullName) {
                 // Force refetching of repo and issues

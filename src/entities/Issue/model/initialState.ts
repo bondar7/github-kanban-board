@@ -1,7 +1,9 @@
 import {IssuesState} from "./types.ts";
 
 export const IssuesInitialState: IssuesState = {
-    issues: [],
+    openIssues: [],
+    inProgressIssues: [],
+    closedIssues: [],
     isLoading_OpenIssues: false,
     isLoading_InProgressIssues: false,
     isLoading_ClosedIssues : false,
