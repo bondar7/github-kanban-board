@@ -1,7 +1,7 @@
-import {Container} from "react-bootstrap";
+import {Container, Spinner} from "react-bootstrap";
 import {FaStar} from "react-icons/fa";
 import useAppSelector from "../../../../shared/hooks/useAppSelector.ts";
-import {selectCurrentRepo} from "../../model/selectors.ts";
+import {selectCurrentRepo, selectIsRepoLoading} from "../../model/selectors.ts";
 
 const formatStars = (stars: number) => {
     return stars >= 1000 ? (stars / 1000).toFixed(1) + "K" : stars.toString();
@@ -9,12 +9,33 @@ const formatStars = (stars: number) => {
 
 const RepoCard = () => {
     const repo = useAppSelector(selectCurrentRepo);
+    const isLoading = useAppSelector(selectIsRepoLoading);
 
-    if (!repo) return;
+    if (isLoading) {
+        return (
+            <Container
+                className="d-flex align-items-center justify-content-center py-4"
+                style={{ fontSize: "1.2rem", fontWeight: 500 }}
+            >
+                <Spinner animation="border" variant="primary" /> Loading...
+            </Container>
+        );
+    }
+
+    if (!repo) {
+        return (
+            <Container
+                className="d-flex align-items-center justify-content-center py-4"
+                style={{ fontSize: "1.2rem", fontWeight: 500 }}
+            >
+                <span style={{ color: "#6c757d" }}>No repository found. Please search for a repository.</span>
+            </Container>
+        );
+    }
 
     return (
         <Container
-            className="d-flex align-items-center gap-3 py-2"
+            className="d-flex align-items-center justify-content-center gap-3 py-2"
             style={{
                 fontSize: "1.2rem",
                 fontWeight: 500,

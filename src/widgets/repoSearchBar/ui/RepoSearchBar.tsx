@@ -22,8 +22,8 @@ const RepoSearchBar = () => {
     }, []);
 
     // Fetch repo
-    const { isFetching: isRepoLoading, refetch: refetchRepo } =
-        repoApi.useGetRepoQuery(repoFullName, { skip: !repoFullName });
+    const { isFetching: isRepoLoading } =
+        repoApi.useGetRepoQuery(repoFullName, { skip: !repoFullName, refetchOnMountOrArgChange: true });
 
     // Fetch issues
     const { isFetching: isOpenIssuesLoading, refetch: refetchOpenIssues } =
@@ -52,7 +52,6 @@ const RepoSearchBar = () => {
 
         if (repoFullName === newRepoFullName) {
             if (!savedIssues) {
-                refetchRepo?.();
                 refetchOpenIssues?.();
                 refetchInProgressIssues?.();
                 refetchClosedIssues?.();
@@ -60,7 +59,6 @@ const RepoSearchBar = () => {
         } else {
             dispatch(setRepoFullName(newRepoFullName));
             dispatch(resetErrors());
-            refetchRepo();
 
             if (!savedIssues) {
                 dispatch(resetIssues());
@@ -72,7 +70,6 @@ const RepoSearchBar = () => {
         dispatch,
         repoURL,
         repoFullName,
-        refetchRepo,
         refetchOpenIssues,
         refetchInProgressIssues,
         refetchClosedIssues,

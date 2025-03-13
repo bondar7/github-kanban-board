@@ -12,20 +12,19 @@ const repoSlice = createSlice({
         },
         setRepoFullName: (state, action: PayloadAction<string>) => {
             state.repoFullName = action.payload;
-        }
+        },
     },
     extraReducers: (builder) => {
         builder.addMatcher(repoApi.endpoints.getRepo.matchPending, (state) => {
             state.isLoading = true;
             state.isError = false;
-            state.repo = null;
         });
         builder.addMatcher(repoApi.endpoints.getRepo.matchFulfilled, (state, action) => {
             state.isLoading = false;
             state.isError = false;
             state.repo = action.payload;
         });
-        builder.addMatcher(repoApi.endpoints.getRepo.matchPending, (state) => {
+        builder.addMatcher(repoApi.endpoints.getRepo.matchRejected, (state) => {
             state.isLoading = false;
             state.isError = true;
             state.repo = null;
