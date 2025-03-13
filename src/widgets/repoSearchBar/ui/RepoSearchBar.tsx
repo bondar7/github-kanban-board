@@ -52,6 +52,7 @@ const RepoSearchBar = () => {
 
         if (repoFullName === newRepoFullName) {
             if (!savedIssues) {
+                refetchRepo?.();
                 refetchOpenIssues?.();
                 refetchInProgressIssues?.();
                 refetchClosedIssues?.();
@@ -75,7 +76,6 @@ const RepoSearchBar = () => {
         refetchOpenIssues,
         refetchInProgressIssues,
         refetchClosedIssues,
-        toSkip
     ]);
 
     const isIssuesLoading = isRepoLoading || isOpenIssuesLoading || isInProgressIssuesLoading || isClosedIssuesLoading;
