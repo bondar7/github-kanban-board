@@ -8,10 +8,11 @@ import {
     selectOpenIssuesError,
     selectOpenIssuesLoading
 } from "../../../entities/Issue";
-import {Alert, Card, CardBody, Container, Spinner} from "react-bootstrap";
+import { Alert, Card, CardBody, Container, Spinner } from "react-bootstrap";
 import IssueCard from "../../../entities/Issue/ui/issueCard/IssueCard.tsx";
 import styles from "./KanbanList.module.css";
 import useAppSelector from "../../../shared/hooks/useAppSelector.ts";
+import { Draggable } from "@hello-pangea/dnd";
 
 interface KanbanListProps {
     title: string;
@@ -20,7 +21,6 @@ interface KanbanListProps {
 }
 
 const KanbanList = ({ title, items, type }: KanbanListProps) => {
-
     const isLoading = useAppSelector((state) =>
         type === IssueState.TODO
             ? selectOpenIssuesLoading(state)
@@ -51,7 +51,19 @@ const KanbanList = ({ title, items, type }: KanbanListProps) => {
                             Failed to load {title.toLowerCase()} issues.
                         </Alert>
                     ) : items.length > 0 ? (
-                        items.map((item: Issue) => <IssueCard key={item.id} issue={item} />)
+                        items.map((item, index) => (
+                            <Draggable key={item.id.toString()} draggableId={item.id.toString()} index={index}>
+                                {(provided) => (
+                                    <div
+                                        ref={provided.innerRef}
+                                        {...provided.draggableProps}
+                                        {...provided.dragHandleProps}
+                                    >
+                                        <IssueCard issue={item} />
+                                    </div>
+                                )}
+                            </Draggable>
+                        ))
                     ) : (
                         <p className={styles.emptyMessage}>No issues found</p>
                     )}
