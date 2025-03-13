@@ -1,17 +1,20 @@
-import {Issue, IssueState, selectDoneIssues, selectInProgressIssues, selectToDoIssues} from "../../entities/Issue";
-import useAppSelector from "../../shared/hooks/useAppSelector.ts";
+import {Issue, IssueState, selectDoneIssues, selectInProgressIssues, selectToDoIssues} from "../../../entities/Issue";
+import useAppSelector from "../../../shared/hooks/useAppSelector.ts";
 import {Col, Container, Row} from "react-bootstrap";
-import useAppDispatch from "../../shared/hooks/useAppDispatch.ts";
+import useAppDispatch from "../../../shared/hooks/useAppDispatch.ts";
 import {useEffect, useState} from "react";
 import {DragDropContext, Droppable} from "@hello-pangea/dnd";
-import KanbanList from "../../features/kanbanBoard/ui/KanbanList.tsx";
-import {handleDragEnd} from "../../features/kanbanBoard/model/dragAndDrop/handleDrag.ts";
+import KanbanList from "../../../features/kanbanBoard/ui/KanbanList.tsx";
+import {handleDragEnd} from "../model/dragAndDrop/handleDrag.ts";
+import {selectRepoFullName} from "../../../entities/Repo";
 
 const KanbanBoard = () => {
     const dispatch = useAppDispatch();
     const toDoIssues: Issue[] = useAppSelector(selectToDoIssues);
     const inProgressIssues: Issue[] = useAppSelector(selectInProgressIssues);
     const doneIssues: Issue[] = useAppSelector(selectDoneIssues);
+
+    const repoFullName = useAppSelector(selectRepoFullName);
 
     const [columns, setColumns] = useState({
         [IssueState.TODO]: toDoIssues || [],
@@ -20,15 +23,20 @@ const KanbanBoard = () => {
     });
 
     useEffect(() => {
-        setColumns({
-            [IssueState.TODO]: toDoIssues,
-            [IssueState.IN_PROGRESS]: inProgressIssues,
-            [IssueState.DONE]: doneIssues,
-        });
-    }, [toDoIssues, inProgressIssues, doneIssues]);
+        const savedColumns = localStorage.getItem(`kanban_${repoFullName}`);
+        if (savedColumns) {
+            setColumns(JSON.parse(savedColumns));
+        } else {
+            setColumns({
+                [IssueState.TODO]: toDoIssues,
+                [IssueState.IN_PROGRESS]: inProgressIssues,
+                [IssueState.DONE]: doneIssues,
+            });
+        }
+    }, [toDoIssues, inProgressIssues, doneIssues, repoFullName]);
 
     return (
-        <DragDropContext onDragEnd={(result) => handleDragEnd(dispatch, setColumns)(result)}>
+        <DragDropContext onDragEnd={(result) => handleDragEnd(repoFullName, dispatch, setColumns)(result)}>
             <Container>
                 <Row>
                     {Object.entries(columns).map(([columnKey, issues]) => (

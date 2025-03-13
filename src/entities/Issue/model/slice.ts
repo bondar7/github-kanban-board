@@ -16,11 +16,6 @@ const IssueSlice = createSlice({
         setClosedIssues: (state, action: PayloadAction<Issue[]>) => {
             state.closedIssues = action.payload;
         },
-        resetIssues: (state) => {
-            state.openIssues = [];
-            state.inProgressIssues = [];
-            state.closedIssues = [];
-        },
         updateIssueState: (state, action: PayloadAction<{ id: number, newState: IssueState, destinationIndex: number }>) => {
             const { id, newState, destinationIndex } = action.payload;
 
@@ -60,7 +55,16 @@ const IssueSlice = createSlice({
                 state[destinationListKey].splice(destinationIndex, 0, issue);
             }
         },
-
+        resetIssues: (state) => {
+            state.openIssues = [];
+            state.inProgressIssues = [];
+            state.closedIssues = [];
+        },
+        resetErrors: (state) => {
+            state.isError_OpenIssues = false;
+            state.isError_InProgressIssues = false;
+            state.isError_ClosedIssues = false;
+        },
     },
     extraReducers: (builder) => {
         builder
@@ -136,5 +140,5 @@ const IssueSlice = createSlice({
     },
 });
 
-export const { setOpenIssues, setInProgressIssues, setClosedIssues, resetIssues, updateIssueState } = IssueSlice.actions;
+export const { setOpenIssues, setInProgressIssues, setClosedIssues, resetIssues, updateIssueState, resetErrors } = IssueSlice.actions;
 export default IssueSlice.reducer;

@@ -9,6 +9,9 @@ const repoSlice = createSlice({
     reducers: {
         setRepo: (state, action: PayloadAction<Repo>) => {
             state.repo = action.payload;
+        },
+        setRepoFullName: (state, action: PayloadAction<string>) => {
+            state.repoFullName = action.payload;
         }
     },
     extraReducers: (builder) => {
@@ -30,5 +33,5 @@ const repoSlice = createSlice({
     }
 });
 
-export const { setRepo } = repoSlice.actions;
+export const { setRepo, setRepoFullName } = repoSlice.actions;
 export default repoSlice.reducer;

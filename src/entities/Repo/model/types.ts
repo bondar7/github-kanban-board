@@ -11,6 +11,7 @@ export interface Repo {
 
 export type RepoState = {
     repo: Repo | null;
+    repoFullName: string;
     isLoading: boolean;
     isError: boolean;
 }

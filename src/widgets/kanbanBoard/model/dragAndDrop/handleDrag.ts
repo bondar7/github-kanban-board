@@ -10,7 +10,7 @@ interface ColumnsType {
 }
 
 export const handleDragEnd =
-    (dispatch: AppDispatch, setColumns: React.Dispatch<React.SetStateAction<ColumnsType>>) =>
+    (repoFullName: string, dispatch: AppDispatch, setColumns: React.Dispatch<React.SetStateAction<ColumnsType>>) =>
         (result: DropResult) => {
             if (!result.destination) return;
 
@@ -34,6 +34,8 @@ export const handleDragEnd =
                 ];
 
                 dispatch(updateIssueState({ id: issue.id, newState: destinationColumnKey, destinationIndex: destination.index }));
+
+                localStorage.setItem(`kanban_${repoFullName}`, JSON.stringify(newColumns));
 
                 return newColumns;
             });
