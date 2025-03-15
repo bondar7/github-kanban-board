@@ -1,7 +1,7 @@
 import {Col, Container, Row} from "react-bootstrap";
-import RepoSearchBar from "../widgets/repoSearchBar/ui/RepoSearchBar.tsx";
-import RepoCard from "../entities/Repo/ui/repoCard/RepoCard.tsx";
-import KanbanBoard from "../widgets/kanbanBoard/ui/KanbanBoard.tsx";
+import RepoSearchBar from "../../widgets/repoSearchBar/ui/RepoSearchBar";
+import RepoCard from "../../entities/Repo/ui/repoCard/RepoCard";
+import KanbanBoard from "../../widgets/kanbanBoard/ui/KanbanBoard";
 
 const IssuesPage = () => {
 
