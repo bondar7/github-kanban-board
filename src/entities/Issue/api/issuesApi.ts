@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { Issue, IssueState } from "../model/types.ts";
+import { Issue, IssueState } from "../model/types";
 
 export const issuesApi = createApi({
     reducerPath: "issuesApi",
