@@ -1,7 +1,7 @@
 import {AppDispatch} from "../../../../shared";
 import {DropResult} from "@hello-pangea/dnd";
 import {Issue, IssueState} from "../../../../entities/Issue";
-import {updateIssueState} from "../../../../entities/Issue/model/slice.ts";
+import {updateIssueState} from "../../../../entities/Issue/model/slice/slice";
 
 interface ColumnsType {
     [IssueState.TODO]: Issue[];
