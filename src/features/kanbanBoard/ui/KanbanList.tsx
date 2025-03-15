@@ -9,14 +9,14 @@ import {
     selectOpenIssuesLoading
 } from "../../../entities/Issue";
 import { Alert, Card, CardBody, Container, Spinner } from "react-bootstrap";
-import IssueCard from "../../../entities/Issue/ui/issueCard/IssueCard.tsx";
+import IssueCard from "../../../entities/Issue/ui/issueCard/IssueCard";
 import styles from "./KanbanList.module.css";
-import useAppSelector from "../../../shared/hooks/useAppSelector.ts";
+import useAppSelector from "../../../shared/hooks/useAppSelector";
 import { Draggable } from "@hello-pangea/dnd";
 
 interface KanbanListProps {
     title: string;
-    items: Issue[];
+    items: Issue[] | undefined; // items can be undefined
     type: IssueState;
 }
 
@@ -50,7 +50,7 @@ const KanbanList = ({ title, items, type }: KanbanListProps) => {
                         <Alert variant="danger" className="text-center">
                             Failed to load {title.toLowerCase()} issues.
                         </Alert>
-                    ) : items.length > 0 ? (
+                    ) : items && Array.isArray(items) && items.length > 0 ? ( // Added check for items
                         items.map((item, index) => (
                             <Draggable key={item.id.toString()} draggableId={item.id.toString()} index={index}>
                                 {(provided) => (
