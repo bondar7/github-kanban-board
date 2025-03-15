@@ -1,4 +1,4 @@
-import IssuesPage from "../pages/IssuesPage.tsx";
+import IssuesPage from "../pages/issuePage/IssuesPage";
 
 function App() {
   return (
