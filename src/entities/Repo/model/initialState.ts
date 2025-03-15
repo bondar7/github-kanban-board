@@ -1,4 +1,4 @@
-import {RepoState} from "./types.ts";
+import {RepoState} from "./types";
 
 export const repoInitialState: RepoState = {
     repo: null,

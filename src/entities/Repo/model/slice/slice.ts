@@ -1,7 +1,7 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {repoInitialState as initialState} from "./initialState.ts";
-import {Repo} from "./types.ts";
-import {repoApi} from "../api/repoApi.ts";
+import {repoInitialState as initialState} from "../initialState";
+import {Repo} from "../types";
+import {repoApi} from "../../api/repoApi";
 
 const repoSlice = createSlice({
     name: "repo",
@@ -33,4 +33,5 @@ const repoSlice = createSlice({
 });
 
 export const { setRepo, setRepoFullName } = repoSlice.actions;
+export {repoSlice};
 export default repoSlice.reducer;

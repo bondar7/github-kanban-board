@@ -1,4 +1,4 @@
 export * from "./model/types";
-export { default as repoReducer } from "./model/slice.ts";
-export * from "./model/selectors.ts";
-export * from "./api/repoApi.ts";
+export { default as repoReducer } from "./model/slice/slice";
+export * from "./model/selectors";
+export * from "./api/repoApi";

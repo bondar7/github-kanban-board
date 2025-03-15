@@ -1,14 +1,14 @@
-import {useCallback, useState} from "react";
-import {Container, Form} from "react-bootstrap";
-import RepoInput from "../../../shared/ui/repoInput/RepoInput.tsx";
-import LoadRepoIssuesButton from "../../../features/repoLoader/ui/LoadRepoIssuesButton.tsx";
-import extractRepoFullName from "../../../shared/utils/extractRepoFullName.ts";
-import {issuesApi} from "../../../entities/Issue";
-import {resetErrors, resetIssues} from "../../../entities/Issue/model/slice.ts";
-import useAppDispatch from "../../../shared/hooks/useAppDispatch.ts";
-import {repoApi, selectRepoFullName} from "../../../entities/Repo";
-import useAppSelector from "../../../shared/hooks/useAppSelector.ts";
-import {setRepoFullName} from "../../../entities/Repo/model/slice.ts";
+import { useCallback, useState } from "react";
+import { Container, Form } from "react-bootstrap";
+import RepoInput from "../../../shared/ui/repoInput/RepoInput";
+import LoadRepoIssuesButton from "../../../features/repoLoader/ui/LoadRepoIssuesButton";
+import extractRepoFullName from "../../../shared/utils/extractRepoFullName";
+import { issuesApi } from "../../../entities/Issue";
+import { resetErrors, resetIssues } from "../../../entities/Issue/model/slice/slice";
+import useAppDispatch from "../../../shared/hooks/useAppDispatch";
+import { repoApi, selectRepoFullName } from "../../../entities/Repo";
+import useAppSelector from "../../../shared/hooks/useAppSelector";
+import { setRepoFullName } from "../../../entities/Repo/model/slice/slice";
 
 const RepoSearchBar = () => {
     const [repoURL, setRepoURL] = useState("");
@@ -17,9 +17,12 @@ const RepoSearchBar = () => {
 
     const dispatch = useAppDispatch();
 
-    const memoizedSetRepoURL = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-        setRepoURL(e.target.value);
-    }, []);
+    const memoizedSetRepoURL = useCallback(
+        (e: React.ChangeEvent<HTMLInputElement>) => {
+            setRepoURL(e.target.value);
+        },
+        []
+    );
 
     // Fetch repo
     const { isFetching: isRepoLoading } =
@@ -41,49 +44,57 @@ const RepoSearchBar = () => {
             skip: !repoFullName || toSkip,
         });
 
-    const handleOnLoad = useCallback((e: React.MouseEvent) => {
-        e.preventDefault();
-        if (!repoURL) return;
+    const handleOnLoad = useCallback(
+        (e: React.MouseEvent) => {
+            e.preventDefault();
+            if (!repoURL) return;
 
-        const newRepoFullName = extractRepoFullName(repoURL);
-        const savedIssues = localStorage.getItem(`kanban_${newRepoFullName}`);
+            const newRepoFullName = extractRepoFullName(repoURL);
+            const savedIssues = localStorage.getItem(`kanban_${newRepoFullName}`);
 
-        setToSkip(!!savedIssues);
+            setToSkip(!!savedIssues);
 
-        if (repoFullName === newRepoFullName) {
-            if (!savedIssues) {
-                refetchOpenIssues?.();
-                refetchInProgressIssues?.();
-                refetchClosedIssues?.();
+            if (repoFullName === newRepoFullName) {
+                if (!savedIssues) {
+                    refetchOpenIssues?.();
+                    refetchInProgressIssues?.();
+                    refetchClosedIssues?.();
+                }
+            } else {
+                dispatch(setRepoFullName(newRepoFullName));
+                dispatch(resetErrors());
+
+                if (!savedIssues) {
+                    dispatch(resetIssues());
+                }
             }
-        } else {
-            dispatch(setRepoFullName(newRepoFullName));
-            dispatch(resetErrors());
 
-            if (!savedIssues) {
-                dispatch(resetIssues());
-            }
-        }
-
-        setRepoURL("");
-    }, [
-        dispatch,
-        repoURL,
-        repoFullName,
-        refetchOpenIssues,
-        refetchInProgressIssues,
-        refetchClosedIssues,
-    ]);
+            setRepoURL("");
+        },
+        [
+            dispatch,
+            repoURL,
+            repoFullName,
+            refetchOpenIssues,
+            refetchInProgressIssues,
+            refetchClosedIssues,
+        ]
+    );
 
     const isIssuesLoading = isRepoLoading || isOpenIssuesLoading || isInProgressIssuesLoading || isClosedIssuesLoading;
 
     return (
         <Container className="my-3">
             <Form className="d-flex gap-3">
-                <RepoInput repoURL={repoURL} setRepoURL={memoizedSetRepoURL} />
+                <RepoInput
+                    repoURL={repoURL}
+                    setRepoURL={memoizedSetRepoURL}
+                    data-testid="repo-input"
+                />
                 <LoadRepoIssuesButton
                     isLoading={isIssuesLoading}
                     handleOnLoad={handleOnLoad}
+                    data-testid="load-issues-button"
                 />
             </Form>
         </Container>

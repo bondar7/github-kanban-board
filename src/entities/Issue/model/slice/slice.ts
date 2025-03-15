@@ -1,7 +1,7 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {IssuesInitialState as initialState} from "./initialState.ts";
-import {Issue, IssueState} from "./types.ts";
-import {issuesApi} from "../api/issuesApi.ts";
+import {IssuesInitialState as initialState} from "../initialState";
+import {Issue, IssuesState, IssueState} from "../types";
+import {issuesApi} from "../../api/issuesApi";
 
 const IssueSlice = createSlice({
     name: "issue",
@@ -19,11 +19,12 @@ const IssueSlice = createSlice({
         updateIssueState: (state, action: PayloadAction<{ id: number, newState: IssueState, destinationIndex: number }>) => {
             const { id, newState, destinationIndex } = action.payload;
 
-            let sourceListKey: keyof typeof state | null = null;
+            const stateTyped = state as IssuesState;
+            let sourceListKey: "openIssues" | "inProgressIssues" | "closedIssues" | null = null;
             let issue: Issue | undefined;
 
             for (const key of ["openIssues", "inProgressIssues", "closedIssues"] as const) {
-                issue = state[key].find(issue => issue.id === id);
+                issue = stateTyped[key].find(issue => issue.id === id);
                 if (issue) {
                     sourceListKey = key;
                     break;
@@ -32,7 +33,7 @@ const IssueSlice = createSlice({
 
             if (!issue || !sourceListKey) return;
 
-            const sourceList = state[sourceListKey];
+            const sourceList = stateTyped[sourceListKey] as Issue[];
 
             const destinationListKey =
                 newState === IssueState.TODO ? "openIssues" :
@@ -40,19 +41,19 @@ const IssueSlice = createSlice({
                         "closedIssues";
 
             if (sourceListKey === destinationListKey) {
-                // change the position in same list
+                // Change position within the same list
                 const sourceIndex = sourceList.findIndex(i => i.id === id);
                 if (sourceIndex === -1) return;
 
                 const [movedIssue] = sourceList.splice(sourceIndex, 1);
                 sourceList.splice(destinationIndex, 0, movedIssue);
             } else {
-                // move to another list
-                state[sourceListKey] = sourceList.filter(i => i.id !== id);
+                // Move issue to a different list
+                stateTyped[sourceListKey] = sourceList.filter(i => i.id !== id); // ✅ No error
 
                 issue.state = newState;
-
-                state[destinationListKey].splice(destinationIndex, 0, issue);
+                const destinationList = stateTyped[destinationListKey] as Issue[];
+                destinationList.splice(destinationIndex, 0, issue);
             }
         },
         resetIssues: (state) => {

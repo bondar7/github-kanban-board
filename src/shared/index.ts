@@ -1,4 +1,4 @@
 export * from "./hooks/useAppSelector";
 export * from "./hooks/useAppDispatch";
-export * from "./store/store";
+export { store } from './store/store';
 export * from "./types/storeTypes";

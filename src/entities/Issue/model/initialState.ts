@@ -1,4 +1,4 @@
-import {IssuesState} from "./types.ts";
+import {IssuesState} from "./types";
 
 export const IssuesInitialState: IssuesState = {
     openIssues: [],
