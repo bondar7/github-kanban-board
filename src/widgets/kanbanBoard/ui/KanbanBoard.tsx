@@ -1,11 +1,11 @@
 import {Issue, IssueState, selectDoneIssues, selectInProgressIssues, selectToDoIssues} from "../../../entities/Issue";
-import useAppSelector from "../../../shared/hooks/useAppSelector.ts";
+import useAppSelector from "../../../shared/hooks/useAppSelector";
 import {Col, Container, Row} from "react-bootstrap";
-import useAppDispatch from "../../../shared/hooks/useAppDispatch.ts";
+import useAppDispatch from "../../../shared/hooks/useAppDispatch";
 import {useEffect, useState} from "react";
 import {DragDropContext, Droppable} from "@hello-pangea/dnd";
-import KanbanList from "../../../features/kanbanBoard/ui/KanbanList.tsx";
-import {handleDragEnd} from "../model/dragAndDrop/handleDrag.ts";
+import KanbanList from "../../../features/kanbanBoard/ui/KanbanList";
+import {handleDragEnd} from "../model/dragAndDrop/handleDrag";
 import {selectRepoFullName} from "../../../entities/Repo";
 
 const KanbanBoard = () => {
