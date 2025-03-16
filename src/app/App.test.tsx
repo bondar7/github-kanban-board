@@ -5,7 +5,7 @@ import App from "./App";
 
 describe("App Component", () => {
     beforeEach(() => {
-        jest.clearAllMocks(); // Resets all mocks
+        jest.clearAllMocks();
     });
 
     it("renders the App component and loads IssuesPage", () => {

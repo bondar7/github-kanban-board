@@ -39,7 +39,7 @@ describe("KanbanList Component", () => {
     ];
 
     beforeEach(() => {
-        jest.clearAllMocks(); // Resets all mocks
+        jest.clearAllMocks();
     });
 
     it("renders loading state when isLoading is true", () => {
@@ -47,18 +47,17 @@ describe("KanbanList Component", () => {
 
         render(<KanbanList title="To Do" items={[]} type={IssueState.TODO} />);
 
-        // Check if loading indicator is present (adjust this selector to match your actual spinner)
-        expect(screen.getByRole("status")).toBeInTheDocument(); // Ensure you use the correct text or role
+
+        expect(screen.getByRole("status")).toBeInTheDocument();
     });
 
 
     it("renders an error message when isError is true", () => {
-        mockedUseAppSelector.mockReturnValueOnce(false); // Mock isLoading as false
-        mockedUseAppSelector.mockReturnValueOnce(true); // Mock isError as true
+        mockedUseAppSelector.mockReturnValueOnce(false);
+        mockedUseAppSelector.mockReturnValueOnce(true);
 
         render(<KanbanList title="To Do" items={[]} type={IssueState.TODO} />);
 
-        // Check if error message is displayed
         expect(screen.getByText(/failed to load to do issues/i)).toBeInTheDocument();
     });
 

@@ -18,7 +18,7 @@ describe('issueSlice', () => {
         store = configureStore({
             reducer: {
                 issueReducer,
-                [issuesApi.reducerPath]: issuesApi.reducer,  // RTK Query reducer
+                [issuesApi.reducerPath]: issuesApi.reducer,
             },
             middleware: (getDefaultMiddleware) =>
                 getDefaultMiddleware().concat(issuesApi.middleware),
@@ -32,9 +32,8 @@ describe('issueSlice', () => {
         ];
         store.dispatch(setOpenIssues(issues));
 
-        // Cast the state to RootState to make sure TypeScript knows its shape
         const state = store.getState() as RootState;
-        expect(state.issueReducer.openIssues).toEqual(issues); // Accessing issue slice
+        expect(state.issueReducer.openIssues).toEqual(issues);
     });
 
     it('should set in-progress issues', () => {
@@ -70,10 +69,8 @@ describe('issueSlice', () => {
 
         const state = store.getState() as RootState;
 
-        // Ensure issue is removed from openIssues
         expect(state.issueReducer.openIssues.find(issue => issue.id === 1)).toBeUndefined();
 
-        // Ensure issue is added to inProgressIssues
         expect(state.issueReducer.inProgressIssues[0].id).toBe(1);
         expect(state.issueReducer.inProgressIssues[0].state).toBe(IssueState.IN_PROGRESS);
     });
@@ -114,7 +111,6 @@ describe('issueSlice', () => {
         ];
         store.dispatch(setInProgressIssues(initialIssues));
 
-        // Move Issue 2 to index 0
         store.dispatch(updateIssueState({ id: 2, newState: IssueState.IN_PROGRESS, destinationIndex: 0 }));
 
         const state = store.getState() as RootState;

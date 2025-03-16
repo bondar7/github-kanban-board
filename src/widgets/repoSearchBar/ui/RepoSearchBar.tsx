@@ -24,11 +24,9 @@ const RepoSearchBar = () => {
         []
     );
 
-    // Fetch repo
     const { isFetching: isRepoLoading } =
         repoApi.useGetRepoQuery(repoFullName, { skip: !repoFullName, refetchOnMountOrArgChange: true });
 
-    // Fetch issues
     const { isFetching: isOpenIssuesLoading, refetch: refetchOpenIssues } =
         issuesApi.useGetOpenIssuesQuery(repoFullName, {
             skip: !repoFullName || toSkip,

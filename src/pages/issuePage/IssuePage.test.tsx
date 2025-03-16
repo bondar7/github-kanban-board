@@ -7,16 +7,14 @@ jest.mock("../../widgets/kanbanBoard/ui/KanbanBoard", () => jest.fn(() => <div>K
 
 describe('IssuesPage', () => {
     beforeEach(() => {
-        jest.clearAllMocks(); // Resets all mocks
+        jest.clearAllMocks();
     });
 
     it('renders the IssuesPage with all its components', () => {
         render(<IssuesPage />);
 
-        // Check if the main heading is rendered
         expect(screen.getByText('GitHub Issue Tracker')).toBeInTheDocument();
 
-        // Check if RepoSearchBar, RepoCard, and KanbanBoard are rendered
         expect(screen.getByText('RepoSearchBar')).toBeInTheDocument();
         expect(screen.getByText('RepoCard')).toBeInTheDocument();
         expect(screen.getByText('KanbanBoard')).toBeInTheDocument();

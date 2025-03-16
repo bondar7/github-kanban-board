@@ -2,7 +2,6 @@ import { render, screen } from "@testing-library/react";
 import IssueCard from "./IssueCard";
 import { Issue, IssueState } from "../../model/types";
 
-// Mock daysAgo function
 jest.mock("../../../../shared/utils/daysAgo", () => jest.fn(() => "2"));
 
 describe("IssueCard Component", () => {
@@ -18,7 +17,7 @@ describe("IssueCard Component", () => {
     };
 
     beforeEach(() => {
-        jest.clearAllMocks(); // Resets all mocks
+        jest.clearAllMocks();
     });
 
     it("renders without crashing", () => {
@@ -29,8 +28,6 @@ describe("IssueCard Component", () => {
     it("displays issue number and created date correctly", () => {
         render(<IssueCard issue={mockIssue} />);
         expect(screen.getByText(/#123/)).toBeInTheDocument();
-
-        // Match the "opened" part more flexibly
         expect(screen.getByText(/opened/)).toBeInTheDocument();
         expect(screen.getByText(/2 days ago/)).toBeInTheDocument();
     });

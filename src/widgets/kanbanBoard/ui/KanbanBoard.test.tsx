@@ -5,7 +5,6 @@ import useAppDispatch from "../../../shared/hooks/useAppDispatch";
 import useAppSelector from "../../../shared/hooks/useAppSelector";
 import {IssueState} from "../../../entities/Issue";
 
-// Mock necessary hooks
 jest.mock('../../../shared/hooks/useAppDispatch');
 jest.mock('../../../shared/hooks/useAppSelector');
 jest.mock("../model/dragAndDrop/handleDrag");
@@ -22,14 +21,12 @@ describe('KanbanBoard', () => {
             [IssueState.DONE]: []
         });
 
-        // Mock handleDragEnd
         (handleDragEnd as jest.Mock).mockReturnValue(jest.fn());
     });
 
     it('renders Kanban board with columns', () => {
         render(<KanbanBoard />);
 
-        // Ensure all columns are rendered
         expect(screen.getByText("To Do")).toBeInTheDocument();
         expect(screen.getByText("In Progress")).toBeInTheDocument();
         expect(screen.getByText("Done")).toBeInTheDocument();

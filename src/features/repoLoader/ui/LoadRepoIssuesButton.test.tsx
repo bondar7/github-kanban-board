@@ -3,7 +3,7 @@ import LoadRepoIssuesButton from './LoadRepoIssuesButton';
 
 describe('LoadRepoIssuesButton', () => {
     beforeEach(() => {
-        jest.clearAllMocks(); // Resets all mocks
+        jest.clearAllMocks();
     });
 
     it('renders the button as disabled with "Loading..." text when isLoading is true', () => {

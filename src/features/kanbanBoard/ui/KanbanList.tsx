@@ -16,7 +16,7 @@ import { Draggable } from "@hello-pangea/dnd";
 
 interface KanbanListProps {
     title: string;
-    items: Issue[] | undefined; // items can be undefined
+    items: Issue[] | undefined;
     type: IssueState;
 }
 
